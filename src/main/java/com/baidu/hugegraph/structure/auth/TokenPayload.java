@@ -17,34 +17,34 @@
  * under the License.
  */
 
-package com.baidu.hugegraph.structure;
+package com.baidu.hugegraph.structure.auth;
 
-import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public abstract class Element {
+public class TokenPayload {
 
-    public abstract String type();
+    @JsonProperty("user_id")
+    private String userId;
 
-    public abstract Object id();
+    @JsonProperty("user_name")
+    private String username;
 
-    @Override
-    public int hashCode() {
-        return this.id().hashCode();
+    private TokenPayload() {
     }
 
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || this.getClass() != other.getClass()) {
-            return false;
-        }
-        return Objects.equals(this.id(), ((Element) other).id());
+    public String userId() {
+        return this.userId;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s(type %s)", this.id(), this.type());
+    public void userId(String userId) {
+        this.userId = userId;
+    }
+
+    public String username() {
+        return this.username;
+    }
+
+    public void username(String username) {
+        this.username = username;
     }
 }

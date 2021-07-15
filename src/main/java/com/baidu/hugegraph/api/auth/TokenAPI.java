@@ -17,34 +17,26 @@
  * under the License.
  */
 
-package com.baidu.hugegraph.structure;
+package com.baidu.hugegraph.api.auth;
 
-import java.util.Objects;
+import com.baidu.hugegraph.client.RestClient;
+import com.baidu.hugegraph.rest.RestResult;
+import com.baidu.hugegraph.structure.auth.TokenPayload;
+import com.baidu.hugegraph.structure.constant.HugeType;
 
-public abstract class Element {
+public class TokenAPI extends AuthAPI {
 
-    public abstract String type();
-
-    public abstract Object id();
-
-    @Override
-    public int hashCode() {
-        return this.id().hashCode();
+    public TokenAPI(RestClient client, String graph) {
+        super(client, graph);
     }
 
     @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || this.getClass() != other.getClass()) {
-            return false;
-        }
-        return Objects.equals(this.id(), ((Element) other).id());
+    protected String type() {
+        return HugeType.TOKEN_VERIFY.string();
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s(type %s)", this.id(), this.type());
+    public TokenPayload verifyToken() {
+        RestResult result = this.client.get(this.path());
+        return result.readObject(TokenPayload.class);
     }
 }

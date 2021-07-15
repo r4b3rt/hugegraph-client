@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-16.04
     env:
       TRAVIS_DIR: assembly/travis
-      COMMIT_ID: 23e3c31a5445cd472e16c6a625a119ca0ab4b04d
+      COMMIT_ID: 379859a44102a76cf5f815
     steps:
       - name: Install JDK 8
         uses: actions/setup-java@v2
@@ -52,7 +52,6 @@ jobs:
           mvn test -Dtest=FuncTestSuite
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.2
+        uses: codecov/codecov-action@v1
         with:
-          token: ${{secrets.CODECOV_TOKEN}}
           file: target/jacoco.xml
